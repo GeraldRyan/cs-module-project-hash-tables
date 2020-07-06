@@ -93,6 +93,7 @@ class HashTable:
         # Your code here
         i = self.hash_index(key)
         self.data[i] = value
+        print(i, self.data[i])
 
 
     def delete(self, key):
