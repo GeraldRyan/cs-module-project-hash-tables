@@ -137,6 +137,8 @@ class HashTable:
         # Your code here
         i = self.hash_index(key)
         # print(f'Test File>>key: {key} i:{i}, self.data[i]: {self.data[i]}')
+        if self.data[i] == None:
+            return self.data[i]
 
         for element in self.data[i]:
             if element[0] == key:
