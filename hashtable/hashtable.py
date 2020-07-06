@@ -23,7 +23,7 @@ class HashTable:
     def __init__(self, capacity):
         # Your code here
         self.capacity = capacity
-        self.data = [None] * capacity
+        self.data = [[]] * capacity
 
 
     def get_num_slots(self):
@@ -37,8 +37,8 @@ class HashTable:
         Implement this.
         """
         # Your code here
-        return len(self.capacity)
-        # return len(data)
+        # return len(self.capacity)
+        return len(self.data)
 
 
     def get_load_factor(self):
@@ -58,9 +58,12 @@ class HashTable:
         """
 
         # Your code here
-        hash = 0
+        FNV_prime = 1099511628211
+        offset_basis = 14695981039346656037
+
+        hash = offset_basis
         for k in key:
-            hash = hash + ord(k)
+            hash = hash ^ ord(k)
 
         return hash
 
@@ -79,21 +82,33 @@ class HashTable:
         Take an arbitrary key and return a valid integer index
         between within the storage capacity of the hash table.
         """
-        #return self.fnv1(key) % self.capacity
-        return self.fnv1(key) % self.capacity
+
+        i = self.fnv1(key) % self.get_num_slots()
+        
+        return i
 
     def put(self, key, value):
         """
         Store the value with the given key.
 
-        Hash collisions should be handled with Linked List Chaining.
+        Hash collisions should be handled with Linked List Chaining. !!!!!!!!!!!!!!!!!!!!!!!!!!
 
         Implement this.
         """
         # Your code here
         i = self.hash_index(key)
-        self.data[i] = value
-        print(i, self.data[i])
+        found = False
+        for h, element in enumerate(self.data[i]):
+            if len(element) ==2 and element[0] == key:
+                self.data[i][h] = (key, value)
+                found = True
+                break
+        if not found:
+            self.data[i].append((key,value))
+
+        # self.data[i] = value
+
+        # print(f'key: {key}, value: {value}, i: {i}, data[i]: {self.data[i]}')
 
 
     def delete(self, key):
@@ -117,6 +132,11 @@ class HashTable:
         """
         # Your code here
         i = self.hash_index(key)
+        # print(f'Test File>>key: {key} i:{i}, self.data[i]: {self.data[i]}')
+
+        for element in self.data[i]:
+            if element[0] == key:
+                return element[1]
         return self.data[i]
 
 
@@ -128,6 +148,11 @@ class HashTable:
         Implement this.
         """
         # Your code here
+        # self.capacity = new_capacity
+        for i in range(self.capacity, new_capacity): # 8-15
+            self.data.append(None)
+
+
 
 
 
@@ -151,12 +176,13 @@ if __name__ == "__main__":
 
     # Test storing beyond capacity
     for i in range(1, 13):
-        print(ht.get(f"line_{i}"))
+        print(i,": ", ht.get(f"line_{i}"))
 
     # Test resizing
     old_capacity = ht.get_num_slots()
     ht.resize(ht.capacity * 2)
     new_capacity = ht.get_num_slots()
+
 
     print(f"\nResized from {old_capacity} to {new_capacity}.\n")
 
