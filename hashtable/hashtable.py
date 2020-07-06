@@ -120,6 +120,10 @@ class HashTable:
         Implement this.
         """
         # Your code here
+        i = self.hash_index(key)
+        for index, element in enumerate(self.data[i]):
+            if element[0] == key:
+                del self.data[i][index]
 
 
     def get(self, key):
