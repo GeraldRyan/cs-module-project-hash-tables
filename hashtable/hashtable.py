@@ -137,7 +137,7 @@ class HashTable:
         for element in self.data[i]:
             if element[0] == key:
                 return element[1]
-        return self.data[i]
+        # return self.data[i]
 
 
     def resize(self, new_capacity):
