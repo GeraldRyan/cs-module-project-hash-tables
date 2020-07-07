@@ -3,14 +3,69 @@ class Node:
         self.value = value
         self.next = None
 
+
+class LinkedList: # TODO port code into HashTable class
+    def __init__(self):
+        self.head = None
+
+    def find(self, value):
+        cur = self.head
+        while cur is not None:
+            if cur.value == value:
+                return cur
+            cur = cur.next 
+        return None
+
+    def insert_at_head(self, value):
+        n = Node(value)
+        n.next = self.head
+        self.head = n 
+    
+    def append(self, value):
+        # TODO
+        pass
+
+    def insert(self, node): # COrresponds to "put" in HashTable
+        # TODO 
+        pass
+
+    def delete(self,value):
+        cur = self.head
+
+        # Special Case of deleting head
+        if cur.value == value:
+            self.head = self.head.next
+            return cur
+
+
+        # General Case
+        prev = cur
+        while cur is not None:
+            if cur.value == value:
+                prev.next = cur.next
+                return cur
+            else:
+                prev = prev.next
+                cur = cur.next
+            return None
+
+
 # Very simple LinkedList
 a = Node(11)
 b = Node(5)
 a.next = b
-print(a.value, b.value, a.next.value)
+head = a
+print(a.value, b.value, a.next.value) # 11, 5, 5
+
+ll = LinkedList()
+ll.insert(11)
+ll.insert(5)
 
 
-class HashTableEntry:
+
+
+
+class HashTableEntry:  # Node in Linked List
     """
     Linked List hash table key/value pair
     """
