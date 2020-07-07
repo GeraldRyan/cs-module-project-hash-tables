@@ -1,3 +1,15 @@
+class Node:
+    def __init__(self,value):
+        self.value = value
+        self.next = None
+
+# Very simple LinkedList
+a = Node(11)
+b = Node(5)
+a.next = b
+print(a.value, b.value, a.next.value)
+
+
 class HashTableEntry:
     """
     Linked List hash table key/value pair
