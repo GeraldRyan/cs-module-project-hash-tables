@@ -166,6 +166,7 @@ class HashTable:
         Implement this.
         """
         # Your code here
+
         i = self.hash_index(key)
         found = False
         for h, element in enumerate(self.data[i]):
@@ -178,6 +179,8 @@ class HashTable:
             self.data[i].append((key,value))
             self.count += 1
 
+        if self.get_load_factor() >.7:
+            self.resize(self.capacity *2)
 
         # self.data[i] = value
 
@@ -231,7 +234,18 @@ class HashTable:
         # Your code here
         # self.capacity = new_capacity
         for i in range(self.capacity, new_capacity): # 8-15
-            self.data.append(None)
+            self.data.append(None) # This is definitely wrong. 
+
+        # For each element in the main list and each element in the linked lists, rehash by using a self.put with the original key values  
+        old_data = self.data
+        self.data = [[]] * new_capacity
+        count = 0
+        for i in range(len(old_data)):
+            if old_data[i] is not []:
+                for index, element in enumerate(old_data[i]):
+                    print(f'old_data[i][1] (key): {old_data[i][1]}, old_data[i][2] (value): {old_data[i][2]}')
+                    self.put(old_data[i][1], old_data[i][2])
+                    count += 1
 
 
 
