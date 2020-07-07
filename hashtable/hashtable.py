@@ -24,6 +24,7 @@ class HashTable:
         # Your code here
         self.capacity = capacity
         self.data = [[]] * capacity
+        self.count = 0
 
 
     def get_num_slots(self):
@@ -91,7 +92,7 @@ class HashTable:
         """
         Store the value with the given key.
 
-        Hash collisions should be handled with Linked List Chaining. !!!!!!!!!!!!!!!!!!!!!!!!!!
+        Hash collisions should be handled with Linked List Chaining. 
 
         Implement this.
         """
@@ -102,9 +103,12 @@ class HashTable:
             if len(element) ==2 and element[0] == key:
                 self.data[i][h] = (key, value)
                 found = True
+                self.count += 1
                 break
         if not found:
             self.data[i].append((key,value))
+            self.count += 1
+
 
         # self.data[i] = value
 
@@ -124,6 +128,8 @@ class HashTable:
         for index, element in enumerate(self.data[i]):
             if element[0] == key:
                 del self.data[i][index]
+                self.count -= 1
+        
 
 
     def get(self, key):
