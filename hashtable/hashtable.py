@@ -43,6 +43,7 @@ class LinkedList: # TODO port code into HashTable class
         while cur is not None:
             if cur.value == value:
                 prev.next = cur.next
+                cur.next = Nonedddddd
                 return cur
             else:
                 prev = prev.next
@@ -116,6 +117,7 @@ class HashTable:
         Implement this.
         """
         # Your code here
+        return self.count / self.get_num_slots()
 
 
     def fnv1(self, key):
@@ -261,6 +263,9 @@ if __name__ == "__main__":
     old_capacity = ht.get_num_slots()
     ht.resize(ht.capacity * 2)
     new_capacity = ht.get_num_slots()
+    print("number of slots", ht.get_num_slots())
+    print("number of entries", ht.count)
+    print("Load Factor", ht.get_load_factor())
 
 
     print(f"\nResized from {old_capacity} to {new_capacity}.\n")
