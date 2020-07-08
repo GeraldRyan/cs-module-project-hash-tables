@@ -13,6 +13,7 @@ class TestHashTable(unittest.TestCase):
             self.assertTrue(x == first10[i])
 
         x = expensive_seq(150, 400, 800)
+        print("x", x)
         self.assertTrue(x == 348089347602676380885589070822523585642423790379026639337628)
 
 

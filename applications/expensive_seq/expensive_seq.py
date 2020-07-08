@@ -1,10 +1,14 @@
 # Your code here
+import hashlib
 
 cache = {}
 def expensive_seq(x, y, z):
     # Your code here
     
-    h = hash((x,y,z))
+    # h = hash((x,y,z)) # Failed due to collision
+    # h = hashlib.md5((x,y,z)).hexdigest() #- Failed to implement successfully
+    h = (x,y,z) #Works like a charm
+
     if h not in cache:
         if x <= 0:
             cache[h] = y + z
