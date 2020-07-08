@@ -182,7 +182,7 @@ class HashTable:
         if not resize:
             if self.get_load_factor() >.7:
                 self.resize(self.get_num_slots() *2)
-        print(self.data)
+        
 
 
 
@@ -240,21 +240,6 @@ class HashTable:
             return None
 
 
-
-
-
-
-
-
-        # # old code
-        # i = self.hash_index(key)
-        # for index, element in enumerate(self.data[i]):
-        #     if element[0] == key:
-        #         del self.data[i][index]
-        #         self.count -= 1
-        
-
-
     def get(self, key):
         """
         Retrieve the value stored with the given key.
@@ -263,15 +248,13 @@ class HashTable:
 
         Implement this.
         """
-        # Your code here
-        # i = self.hash_index(key)
-        # if self.data[i] == None:
-        #     return self.data[i]
-
-        # for element in self.data[i]:
-        #     if element[0] == key:
-        #         return element[1]
-
+        i = self.hash_index(key)
+        cur = self.data[i]
+        while cur is not None:
+            if cur.key == key:
+                return cur
+            cur = cur.next 
+        return None
 
     def resize(self, new_capacity):
         """
@@ -292,13 +275,16 @@ class HashTable:
                     self.put(cur_node.key, cur_node.value, True)
                     cur_node = cur_node.next
 
-
+        
             # General Case
-
-
-
-
-
+        
+        
+        # for i in self.data:
+        #     if i is None:
+        #         print(i)
+        #     else:
+        #         print(i.key, i.value)
+        # print("XXXXXXXX________++++++++++++++++++++++++\n")
 
 
 
@@ -323,7 +309,7 @@ if __name__ == "__main__":
 
     # Test storing beyond capacity
     for i in range(1, 13):
-        print(i,": ", ht.get(f"line_{i}"))
+        print(i,": ", ht.get(f"line_{i}").value)
 
     # Test resizing
     old_capacity = ht.get_num_slots()
@@ -340,6 +326,6 @@ if __name__ == "__main__":
 
     # Test if data intact after resizing
     for i in range(1, 13):
-        print(ht.get(f"line_{i}"))
+        print(ht.get(f"line_{i}").value)
 
     print("")
