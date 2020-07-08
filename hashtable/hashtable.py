@@ -252,7 +252,7 @@ class HashTable:
         cur = self.data[i]
         while cur is not None:
             if cur.key == key:
-                return cur
+                return cur.value
             cur = cur.next 
         return None
 
