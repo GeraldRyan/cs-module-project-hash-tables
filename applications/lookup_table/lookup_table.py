@@ -22,16 +22,17 @@ def slowfun(x, y):
     output, but completes quickly instead of taking ages to run.
     """
     # Your code here
-    h = hash((x,y))
+    # h = hash((x,y))
 
-    if h not in cache:
+
+    if (x,y) not in cache:
         v = math.pow(x, y)
         v = math.factorial(v)
         v //= (x + y)
         v %= 982451653
-        cache[h] = v
+        cache[(x,y)] = v
 
-    return cache[h]
+    return cache[(x,y)]
 
 
 # Do not modify below this line!
