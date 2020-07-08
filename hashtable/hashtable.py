@@ -270,18 +270,7 @@ class HashTable:
                     self.put(cur_node.key, cur_node.value, True)
                     cur_node = cur_node.next
 
-        
-            # General Case
-        
-        
-        # for i in self.data:
-        #     if i is None:
-        #         print(i)
-        #     else:
-        #         print(i.key, i.value)
-        # print("XXXXXXXX________++++++++++++++++++++++++\n")
-
-
+    
 
 if __name__ == "__main__":
     ht = HashTable(8)
