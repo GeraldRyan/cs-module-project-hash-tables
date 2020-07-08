@@ -9,10 +9,10 @@ class LinkedList: # TODO port code into HashTable class
     def __init__(self):
         self.head = None
 
-    def find(self, value):
+    def find(self, key):
         cur = self.head
         while cur is not None:
-            if cur.value == value:
+            if cur.key == key:
                 return cur
             cur = cur.next 
         return None
@@ -182,7 +182,7 @@ class HashTable:
         if not resize:
             if self.get_load_factor() >.7:
                 self.resize(self.get_num_slots() *2)
-
+        print(self.data)
 
 
 
