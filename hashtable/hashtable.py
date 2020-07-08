@@ -1,6 +1,7 @@
 class Node:
-    def __init__(self,value):
+    def __init__(self, key, value):
         self.value = value
+        self.key = key
         self.next = None
 
 
@@ -25,7 +26,7 @@ class LinkedList: # TODO port code into HashTable class
         # TODO
         pass
 
-    def insert(self, node): # COrresponds to "put" in HashTable
+    def insert(self, node): # Corresponds to "put" in HashTable
         # TODO 
         pass
 
@@ -52,15 +53,15 @@ class LinkedList: # TODO port code into HashTable class
 
 
 # Very simple LinkedList
-a = Node(11)
-b = Node(5)
-a.next = b
-head = a
-print(a.value, b.value, a.next.value) # 11, 5, 5
+# a = Node(11)
+# b = Node(5)
+# a.next = b
+# head = a
+# print(a.value, b.value, a.next.value) # 11, 5, 5
 
-ll = LinkedList()
-ll.insert(11)
-ll.insert(5)
+# ll = LinkedList()
+# ll.insert(11)
+# ll.insert(5)
 
 
 
@@ -91,7 +92,7 @@ class HashTable:
     def __init__(self, capacity):
         # Your code here
         self.capacity = capacity
-        self.data = [[]] * capacity
+        self.data = [None] * capacity
         self.count = 0
 
 
@@ -153,11 +154,10 @@ class HashTable:
         between within the storage capacity of the hash table.
         """
 
-        i = self.fnv1(key) % self.get_num_slots()
+        return self.fnv1(key) % self.get_num_slots()
         
-        return i
 
-    def put(self, key, value):
+    def put(self, key, value, resize = False):
         """
         Store the value with the given key.
 
@@ -165,22 +165,41 @@ class HashTable:
 
         Implement this.
         """
-        # Your code here
+        # Your code 
+    
+
 
         i = self.hash_index(key)
-        found = False
-        for h, element in enumerate(self.data[i]):
-            if len(element) ==2 and element[0] == key:
-                self.data[i][h] = (key, value)
-                found = True
-                self.count += 1
-                break
-        if not found:
-            self.data[i].append((key,value))
-            self.count += 1
+        if self.data[i] is None:
+            self.data[i] = Node(key, value)
+        
+        else:
+            copy = self.data[i]
+            self.data[i] = Node(key, value)
+            self.data[i].next = copy
+        self.count += 1
 
-        if self.get_load_factor() >.7:
-            self.resize(self.capacity *2)
+        if not resize:
+            if self.get_load_factor() >.7:
+                self.resize(self.get_num_slots() *2)
+
+
+
+
+
+
+        # found = False
+
+        # for h, element in enumerate(self.data[i]):
+        #     if len(element) ==2 and element[0] == key:
+        #         self.data[i][h] = (key, value)
+        #         found = True
+        #         self.count += 1
+        #         break
+        # if not found:
+        #     self.data[i].append((key,value))
+        #     self.count += 1
+
 
         # self.data[i] = value
 
@@ -197,10 +216,42 @@ class HashTable:
         """
         # Your code here
         i = self.hash_index(key)
-        for index, element in enumerate(self.data[i]):
-            if element[0] == key:
-                del self.data[i][index]
-                self.count -= 1
+        cur = self.data[i]
+
+        if cur is None:
+            return None
+
+        # Special Case of deleting head
+        if cur.key == key:
+            self.data[i] = cur.next
+            return cur
+
+
+        # General Case
+        prev = cur
+        while cur is not None:
+            if cur.key == key:
+                prev.next = cur.next
+                cur.next = None
+                return cur
+            else:
+                prev = prev.next
+                cur = cur.next
+            return None
+
+
+
+
+
+
+
+
+        # # old code
+        # i = self.hash_index(key)
+        # for index, element in enumerate(self.data[i]):
+        #     if element[0] == key:
+        #         del self.data[i][index]
+        #         self.count -= 1
         
 
 
@@ -213,15 +264,13 @@ class HashTable:
         Implement this.
         """
         # Your code here
-        i = self.hash_index(key)
-        # print(f'Test File>>key: {key} i:{i}, self.data[i]: {self.data[i]}')
-        if self.data[i] == None:
-            return self.data[i]
+        # i = self.hash_index(key)
+        # if self.data[i] == None:
+        #     return self.data[i]
 
-        for element in self.data[i]:
-            if element[0] == key:
-                return element[1]
-        # return self.data[i]
+        # for element in self.data[i]:
+        #     if element[0] == key:
+        #         return element[1]
 
 
     def resize(self, new_capacity):
@@ -231,21 +280,23 @@ class HashTable:
 
         Implement this.
         """
-        # Your code here
-        # self.capacity = new_capacity
-        for i in range(self.capacity, new_capacity): # 8-15
-            self.data.append(None) # This is definitely wrong. 
 
-        # For each element in the main list and each element in the linked lists, rehash by using a self.put with the original key values  
         old_data = self.data
-        self.data = [[]] * new_capacity
-        count = 0
-        for i in range(len(old_data)):
-            if old_data[i] is not []:
-                for index, element in enumerate(old_data[i]):
-                    print(f'old_data[i][1] (key): {old_data[i][1]}, old_data[i][2] (value): {old_data[i][2]}')
-                    self.put(old_data[i][1], old_data[i][2])
-                    count += 1
+        self.capacity = new_capacity
+        self.data = [None] * new_capacity
+        self.count = 0
+        for i in old_data:
+            if i is not None:
+                cur_node = i
+                while cur_node is not None:
+                    self.put(cur_node.key, cur_node.value, True)
+                    cur_node = cur_node.next
+
+
+            # General Case
+
+
+
 
 
 
@@ -253,6 +304,7 @@ class HashTable:
 
 if __name__ == "__main__":
     ht = HashTable(8)
+    print("initial capacity", ht.get_num_slots())
 
     ht.put("line_1", "'Twas brillig, and the slithy toves")
     ht.put("line_2", "Did gyre and gimble in the wabe:")
@@ -275,6 +327,8 @@ if __name__ == "__main__":
 
     # Test resizing
     old_capacity = ht.get_num_slots()
+    print("Old capacity", old_capacity)
+
     ht.resize(ht.capacity * 2)
     new_capacity = ht.get_num_slots()
     print("number of slots", ht.get_num_slots())
