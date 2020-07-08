@@ -166,45 +166,40 @@ class HashTable:
         Implement this.
         """
         # Your code 
-    
-
-
         i = self.hash_index(key)
+
+        # Base Node case
         if self.data[i] is None:
             self.data[i] = Node(key, value)
+            self.count += 1
+            if not resize:
+                if self.get_load_factor() >.7:
+                    self.resize(self.get_num_slots() *2)
+            return (key, value)
         
-        else:
-            copy = self.data[i]
-            self.data[i] = Node(key, value)
-            self.data[i].next = copy
+        
+        # Overwrite case
+        cur = self.data[i]
+        while cur is not None:
+            if cur.key == key:
+                cur.value = value
+                if not resize:
+                    if self.get_load_factor() >.7:
+                        self.resize(self.get_num_slots() *2)
+                return (key, value)
+            cur = cur.next
+    
+
+        # General extend Case (inserts at)
+        copy = self.data[i]
+        self.data[i] = Node(key, value)
+        self.data[i].next = copy
         self.count += 1
 
         if not resize:
             if self.get_load_factor() >.7:
                 self.resize(self.get_num_slots() *2)
         
-
-
-
-
-
-        # found = False
-
-        # for h, element in enumerate(self.data[i]):
-        #     if len(element) ==2 and element[0] == key:
-        #         self.data[i][h] = (key, value)
-        #         found = True
-        #         self.count += 1
-        #         break
-        # if not found:
-        #     self.data[i].append((key,value))
-        #     self.count += 1
-
-
-        # self.data[i] = value
-
-        # print(f'key: {key}, value: {value}, i: {i}, data[i]: {self.data[i]}')
-
 
     def delete(self, key):
         """
