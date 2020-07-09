@@ -15,6 +15,17 @@ def is_start_word(w):
     if check_upper(w[0]) or (w[0] == '"' and check_upper(w[1])):
         return True
 
+def print_gobble():
+    print(random_start, end=" ")
+    word = random.choice(list_of_words)
+    while( word not in end_words):
+        if word not in start_words:
+            print(word, end=" ")
+        word = random.choice(can_follow[word])
+    print(word) # end word
+
+
+
 
 can_follow = {}
 # Read in all the words in one go
@@ -45,12 +56,14 @@ for index, word in enumerate(list_of_words):
 
 # print(list_of_words)
 # print("Can follow", can_follow)
-print("start words", start_words)
-
 random_start = random.choice(start_words)
-print("random start:", random_start)
-print("X start words", len(start_words))
 
+# print("start words", start_words)
+# print("random start:", random_start)
+# print("X start words", len(start_words))
+
+
+print_gobble()
 # TODO: analyze which words can follow other words
 # Your code here
 
