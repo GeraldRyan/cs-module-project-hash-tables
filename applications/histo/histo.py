@@ -6,13 +6,12 @@ def filter_string(s1, s2):
   return s1
 
 
-
+word_counter = {}
 
 with open("robin.txt") as f:
   words = f.read()
 
 
-
-# print(words)
-
 filtered_words = filter_string(words, [",", ".", ":", ";", "!", '"', "'", "?", '\n'])
+split_filtered_words = split(filtered_words)
+print(split_filtered_words)
