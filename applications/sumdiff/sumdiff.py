@@ -8,7 +8,7 @@ from time import time
 
 start_time = time()
 
-q = (1, 3, 4, 7, 12, 18)
+q = (1, 3, 4, 7, 12)
 
 def f(x):
     return x * 4 + 6
