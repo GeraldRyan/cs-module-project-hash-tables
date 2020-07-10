@@ -27,4 +27,7 @@ for word in split_filtered_words:
     word_counter[word] = 1
 
 word_counter_sorted = sort_dict(word_counter)
-print(word_counter_sorted)
+# print(word_counter_sorted)
+
+for word in word_counter_sorted:
+  print(word, "#"*word_counter_sorted[word])
