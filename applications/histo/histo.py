@@ -9,9 +9,17 @@ def filter_string(s1, s2):
 word_counter = {}
 
 with open("robin.txt") as f:
-  words = f.read()
+  words = f.read().lower()
 
 
-filtered_words = filter_string(words, [",", ".", ":", ";", "!", '"', "'", "?", '\n'])
-split_filtered_words = split(filtered_words)
-print(split_filtered_words)
+filtered_words = filter_string(words, [",", ".", ":", ";", "!", '"', "'", "?"])
+split_filtered_words = filtered_words.split()
+# print(split_filtered_words)
+
+for word in split_filtered_words:
+  if word in word_counter:
+    word_counter[word] +=1
+  else:
+    word_counter[word] = 1
+
+print(word_counter)
