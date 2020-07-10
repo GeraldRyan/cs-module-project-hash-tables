@@ -4,6 +4,9 @@ f(a) + f(b) = f(c) - f(d)
 """
 import math
 import itertools
+import time
+
+start_time = time()
 
 q = (1, 3, 4, 7, 12)
 
@@ -71,3 +74,5 @@ def compute(cartesians):
 print(cartesians)
 compute(cartesians)
 print(matches)
+end_time = time()
+print("Time taken", start_time-end_time)
