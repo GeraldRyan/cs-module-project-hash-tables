@@ -32,17 +32,42 @@ def sum_diff(tup):
 computed_values = sum_diff(q)
 print(computed_values)
 
-for index, c in enumerate(computed_values):
-    print(index, c, computed_values[c])
+# for index, c in enumerate(computed_values):
+    # print(index, c, computed_values[c])
     # for range(len(computed_values)):
     #     pass
         
 
 
 
-
+how_long = 0
 
 print(f(1)+f(1) == f(12) - f(7))
 print("Number of combos with repitition order important", get_num_combinations(q,4))
-for el in get_combinations(q,4):
-    print(el)
+cartesians = get_combinations(q, 4)
+
+matches = []
+
+for el in cartesians:
+    # print(el)
+    how_long += 1
+    for i, v in enumerate(el):
+        print(i,v, el)
+    if f(el[0]) + f(el[1]) == f(el[2]) - f(el[3]):
+        matches.append(el)
+
+
+print(how_long)
+
+
+
+def compute(cartesians):
+    matches = {}
+    print("in function")
+    print(cartesians)
+    for l in cartesians:
+        print(l)  # why isn't this working when worked above???
+
+print(cartesians)
+compute(cartesians)
+print(matches)
