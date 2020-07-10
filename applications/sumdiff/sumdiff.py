@@ -4,7 +4,7 @@ f(a) + f(b) = f(c) - f(d)
 """
 import math
 import itertools
-import time
+from time import time
 
 start_time = time()
 
@@ -75,4 +75,4 @@ print(cartesians)
 compute(cartesians)
 print(matches)
 end_time = time()
-print("Time taken", start_time-end_time)
+print("Time taken", round(end_time- start_time,3))
